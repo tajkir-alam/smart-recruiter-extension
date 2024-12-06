@@ -1,5 +1,58 @@
+import { useState } from "react";
+import { MdEmail } from "react-icons/md";
+import { FaPhoneAlt } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+
 const Candidate = () => {
-  return <div className="p-4">I am your candidate</div>;
+  const [userImage, setUserImage] = useState(
+    "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"
+  );
+  const [userName, setUserName] = useState("Tajkir Alam Rion");
+  const [designation, setDesignation] = useState("Software Engineer");
+  const [userEmail, setUserEmail] = useState("rion@gmail.com");
+  const [userPhone, setUserPhone] = useState("+880 162 463 2302");
+  const [userAddress, setUserAddress] = useState("Dhaka, Bangladesh");
+
+
+  
+
+  return (
+    <div className="p-2 space-y-4">
+      <section className="p-3 border border-blue-700 rounded-md">
+        <div className="inline text-blue-700 font-medium text-lg">
+          We are checking if this user is in your CRM
+        </div>
+        <div className="inline-block w-1 h-1 ml-1 bg-blue-700 rounded-full animate-pulse"></div>
+        <div className="inline-block w-1 h-1 ml-1 bg-blue-700 rounded-full animate-pulse"></div>
+        <div className="inline-block w-1 h-1 ml-1 bg-blue-700 rounded-full animate-pulse"></div>
+      </section>
+
+      <div className="space-y-3">
+        <div className="flex flex-col items-center gap-2">
+          <img src={userImage} alt="" className="w-20 h-20 rounded-full" />
+          <div className="text-center">
+            <h4 className="text-lg font-medium text-gray-900">{userName}</h4>
+            <h6 className="font-medium text-gray-700">{designation}</h6>
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-center gap-4 p-2 bg-white shadow rounded-md">
+            <MdEmail size={16} />
+            <p className="text-base">{userEmail}</p>
+          </div>
+          <div className="flex items-center gap-4 p-2 bg-white shadow rounded-md">
+            <FaPhoneAlt size={16} />
+            <p className="text-base">{userPhone}</p>
+          </div>
+          <div className="flex items-center gap-4 p-2 bg-white shadow rounded-md">
+            <FaLocationDot size={16} />
+            <p className="text-base">{userAddress}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Candidate;
