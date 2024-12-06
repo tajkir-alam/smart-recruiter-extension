@@ -3,7 +3,7 @@
   "name": "Smart Recruiter",
   "description": "Recruitment Extension",
   "version": "1.0",
-  "permissions": ["activeTab", "scripting", "storage"],
+  "permissions": ["scripting", "activeTab", "storage"],
   "host_permissions": ["https://www.linkedin.com/*"],
   "action": {
     "default_popup": "index.html"

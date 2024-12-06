@@ -1,20 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 
 const Candidate = () => {
-  const [userImage, setUserImage] = useState(
-    "https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"
-  );
-  const [userName, setUserName] = useState("Tajkir Alam Rion");
-  const [designation, setDesignation] = useState("Software Engineer");
-  const [userEmail, setUserEmail] = useState("rion@gmail.com");
-  const [userPhone, setUserPhone] = useState("+880 162 463 2302");
-  const [userAddress, setUserAddress] = useState("Dhaka, Bangladesh");
+  const [userImage, setUserImage] = useState(null);
+  const [userName, setUserName] = useState(null);
+  const [designation, setDesignation] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
+  const [userPhone, setUserPhone] = useState(null);
+  const [userAddress, setUserAddress] = useState(null);
 
+  const fetchProfileData = async () => {
+    try {
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        currentWindow: true,
+      });
+      const response = await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: () => ({
+          userImage: document.querySelector(".evi-image")?.innerText,
+          userName: document.querySelector(".TZyLsYldvXqyzgZmRUyGRPWfylsk")
+            ?.innerText,
+          designation: document.querySelector(".text-body-medium")?.innerText,
+          userEmail: document.querySelector(".pv-contact-info")?.innerText,
+          userPhone: document.querySelector(".pv-contact-info")?.innerText,
+          userAddress: document.querySelector(".pv-contact-info")?.innerText,
+          jobs: Array.from(document.querySelectorAll(".job-card")).map(
+            (job) => job.innerText
+          ),
+        }),
+      });
 
-  
+      const data = response[0].result;
+      setUserName(data.userName);
+      setDesignation(data.designation);
+      setUserEmail(data.userEmail);
+      setUserPhone(data.userPhone);
+      setUserAddress(data.userAddress);
+
+      // const res = await axios.post("http://localhost:5000/api/users", data);
+      // setStatus(res.data.message);
+    } catch (error) {
+      console.error("Error fetching data", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
 
   return (
     <div className="p-2 space-y-4">
