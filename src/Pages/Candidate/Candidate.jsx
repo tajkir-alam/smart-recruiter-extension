@@ -20,11 +20,11 @@ const Candidate = () => {
       const response = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
         func: () => ({
-          userImage: document.querySelector(".evi-image")?.innerText,
+          userImage: document.querySelector(".MlIjQIsoOGiyiKxEDJSEdiquoRSHQASDQ ")?.src,
           userName: document.querySelector(".TZyLsYldvXqyzgZmRUyGRPWfylsk")
             ?.innerText,
           designation: document.querySelector(".text-body-medium")?.innerText,
-          userEmail: document.querySelector(".pv-contact-info")?.innerText,
+          userEmail: document.querySelector(".aHbrOVMOVMSSMMvtmofrAZWqqaPtgljcEqCZA")?.innerText,
           userPhone: document.querySelector(".pv-contact-info")?.innerText,
           userAddress: document.querySelector(".pv-contact-info")?.innerText,
           jobs: Array.from(document.querySelectorAll(".job-card")).map(
@@ -34,6 +34,7 @@ const Candidate = () => {
       });
 
       const data = response[0].result;
+      setUserImage(data.userImage);
       setUserName(data.userName);
       setDesignation(data.designation);
       setUserEmail(data.userEmail);
@@ -50,7 +51,8 @@ const Candidate = () => {
   useEffect(() => {
     fetchProfileData();
   }, []);
-
+  
+  
   return (
     <div className="p-2 space-y-4">
       <section className="p-3 border border-blue-700 rounded-md">
