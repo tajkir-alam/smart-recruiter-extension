@@ -10,6 +10,7 @@ const Candidate = () => {
   const [userEmail, setUserEmail] = useState(null);
   const [userPhone, setUserPhone] = useState(null);
   const [userAddress, setUserAddress] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const fetchProfileData = async () => {
     try {
@@ -19,20 +20,35 @@ const Candidate = () => {
       });
       const response = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        func: () => ({
-          userImage: document.querySelector(".pv-top-card-profile-picture__image--show.evi-image.evi-image")?.src,
-          userName: document.querySelector(".v-align-middle.break-words")
-            ?.innerText,
-          designation: document.querySelector(".text-body-medium")?.innerText,
-          userEmail: document.querySelector(
-            ".aHbrOVMOVMSSMMvtmofrAZWqqaPtgljcEqCZA"
-          )?.innerText,
-          userPhone: document.querySelector(".pv-contact-info")?.innerText,
-          userAddress: document.querySelector(".pv-contact-info")?.innerText,
-          jobs: Array.from(document.querySelectorAll(".job-card")).map(
-            (job) => job.innerText
-          ),
-        }),
+        func: () => {
+          const contactInfo = document.querySelector(
+            "#top-card-text-details-contact-info"
+          );
+
+          if (contactInfo) {
+            contactInfo.click(); // Trigger the click
+
+            const contactModal = document.getElementById(
+              "artdeco-modal-outlet"
+            );
+            // contactModal.style.visibility = "hidden"; // Makes the element hidden
+          }
+
+          return {
+            userImage: document.querySelector(
+              ".pv-top-card-profile-picture__image--show.evi-image.evi-image"
+            )?.src,
+            userName: document.querySelector(".v-align-middle.break-words")
+              ?.innerText,
+            designation: document.querySelector(".text-body-medium")?.innerText,
+            userEmail: document.querySelector("a[href^='mailto:']")?.innerText,
+            userPhone: document.querySelector(
+              ".pv-contact-info__contact-type .list-style-none li span.t-black"
+            )?.innerText,
+            userAddress: document.querySelector("link-without-visited-state")
+              ?.innerText,
+          };
+        },
       });
 
       const data = response[0].result;
@@ -42,11 +58,10 @@ const Candidate = () => {
       setUserEmail(data.userEmail);
       setUserPhone(data.userPhone);
       setUserAddress(data.userAddress);
-
-      // const res = await axios.post("http://localhost:5000/api/users", data);
-      // setStatus(res.data.message);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data", error);
+      setLoading(false);
     }
   };
 
@@ -83,6 +98,7 @@ const Candidate = () => {
             <FaPhoneAlt size={16} />
             <p className="text-base">{userPhone}</p>
           </div>
+
           <div className="flex items-center gap-4 p-2 bg-white shadow rounded-md">
             <FaLocationDot size={16} />
             <p className="text-base">{userAddress}</p>
