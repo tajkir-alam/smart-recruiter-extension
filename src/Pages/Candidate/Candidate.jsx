@@ -26,12 +26,7 @@ const Candidate = () => {
           );
 
           if (contactInfo) {
-            contactInfo.click(); // Trigger the click
-
-            const contactModal = document.getElementById(
-              "artdeco-modal-outlet"
-            );
-            // contactModal.style.visibility = "hidden"; // Makes the element hidden
+            contactInfo.click();
           }
 
           return {
@@ -45,7 +40,7 @@ const Candidate = () => {
             userPhone: document.querySelector(
               ".pv-contact-info__contact-type .list-style-none li span.t-black"
             )?.innerText,
-            userAddress: document.querySelector("link-without-visited-state")
+            userAddress: document.querySelector("a[href^='http://maps']")
               ?.innerText,
           };
         },
