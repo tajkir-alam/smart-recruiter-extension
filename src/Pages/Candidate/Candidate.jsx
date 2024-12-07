@@ -85,19 +85,25 @@ const Candidate = () => {
         </div>
 
         <div className="space-y-2">
-          <div className="flex items-center gap-4 p-2 bg-white shadow rounded-md">
-            <MdEmail size={16} />
-            <p className="text-base">{userEmail}</p>
-          </div>
-          <div className="flex items-center gap-4 p-2 bg-white shadow rounded-md">
-            <FaPhoneAlt size={16} />
-            <p className="text-base">{userPhone}</p>
-          </div>
+          {userEmail && (
+            <div className="flex items-center gap-4 p-2 bg-white shadow rounded-md">
+              <MdEmail size={16} />
+              <p className="text-base">{userEmail}</p>
+            </div>
+          )}
+          {userPhone && (
+            <div className="flex items-center gap-4 p-2 bg-white shadow rounded-md">
+              <FaPhoneAlt size={16} />
+              <p className="text-base">{userPhone}</p>
+            </div>
+          )}
 
-          <div className="flex items-center gap-4 p-2 bg-white shadow rounded-md">
-            <FaLocationDot size={16} />
-            <p className="text-base">{userAddress}</p>
-          </div>
+          {userAddress && (
+            <div className="flex items-center gap-4 p-2 bg-white shadow rounded-md">
+              <FaLocationDot size={16} />
+              <p className="text-base">{userAddress}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
